@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, enableProdMode } from '@angular/core';
 import { Article } from '../../interfaces/interfaces';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 
 // Native
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -22,7 +22,8 @@ export class NoticiaComponent implements OnInit {
     private _inAppBrowser: InAppBrowser,
     public _actionSheetController: ActionSheetController,
     private _socialSharing: SocialSharing,
-    private _dataLocal: DataLocalService
+    private _dataLocal: DataLocalService,
+    private _platform: Platform
   ) { }
 
   ngOnInit() {
@@ -68,13 +69,9 @@ export class NoticiaComponent implements OnInit {
         text: 'Compartir',
         icon: 'share',
         handler: () => {
-          // console.log('Share clicked');
-          this._socialSharing.share(
-            this.noticia.title,
-            this.noticia.source.name,
-            '', // file o archivo
-            this.noticia.url
-          );
+          this.compartirNoticia();
+
+          
         }
       },
       guadarBorrarBtn,     
@@ -92,6 +89,26 @@ export class NoticiaComponent implements OnInit {
 
   }
 
-  
+  compartirNoticia() {
 
+    if (this._platform.is('cordova')) {
+      this._socialSharing.share(
+        this.noticia.title,
+        this.noticia.source.name,
+        '', // file o archivo
+        this.noticia.url  
+      );
+    } else {
+      if (navigator['share']) {
+        navigator['share']({
+          title: this.noticia.title,
+          text: this.noticia.description,
+          url: this.noticia.url,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+      console.log('No se pudo compartir, navegador no compatible...')
+    }   
+  }
 }

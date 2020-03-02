@@ -10,7 +10,11 @@ import { Article } from 'src/app/interfaces/interfaces';
 })
 export class Tab2Page implements OnInit {
   @ViewChild(IonSegment, {static: true}) segment: IonSegment
-  cetegorias = ['Business', 'Entertainment', 'General', 'Health', 'Science', 'Sports', 'Technology'];
+  // cetegorias = ['Business', 'Entertainment', 'General', 'Health', 'Science', 'Sports', 'Technology'];
+
+  cetegorias = ['Economía', 'Entretenimiento', 'General', 'Salud', 'Ciencia', 'Deporte', 'Tecnología'];
+
+
   noticias: Article[] = [];
 
   constructor(
@@ -23,6 +27,35 @@ export class Tab2Page implements OnInit {
   }
 
   getNoticias(categoria: string, event?) {
+
+    if (categoria === 'Economía') {
+      categoria = 'Business';
+    }
+
+    if (categoria === 'Entretenimiento') {
+      categoria = 'Entertainment';
+    }
+
+    if (categoria === 'General') {
+      categoria = 'General';
+    }
+
+    if (categoria === 'Salud') {
+      categoria = 'Health';
+    }
+
+    if (categoria === 'Ciencia') {
+      categoria = 'Science';
+    }
+
+    if (categoria === 'Deporte') {
+      categoria = 'Sports';
+    }
+
+    if (categoria === 'Tecnología') {
+      categoria = 'Technology';
+    }
+
     this._noticiasService.getTopHeadLinesCategoria(categoria).subscribe(
       response => {  
         console.log(response);

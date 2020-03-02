@@ -14,6 +14,8 @@ import { AppComponent } from './app.component';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
@@ -25,7 +27,8 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

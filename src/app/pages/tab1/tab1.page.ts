@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NoticiasService } from '../../services/noticias.service';
 import { Article } from '../../interfaces/interfaces';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -11,7 +12,8 @@ export class Tab1Page implements OnInit {
   noticias: Article[] = [];
 
   constructor(
-    private _noticiasService: NoticiasService
+    private _noticiasService: NoticiasService,
+    private _platform: Platform
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,10 @@ export class Tab1Page implements OnInit {
 
   loadData(event) {
     this.cargarNoticias(event);
+  }
+
+  salir() {
+    //navigator.app.exitApp();
   }
 
 }
